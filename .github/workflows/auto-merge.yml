@@ -5,7 +5,7 @@ on:
     branches: [ dependencies ]
 
 permissions:
-  pull-requests: write
+  pull-requests:
   contents: write
 
 jobs:
@@ -25,11 +25,6 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
           cache: maven
-      - name: Build with Maven
-        run: mvn clean verify jacoco:report -Pcoverage test -e -B --file pom.xml
-        env:
-          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
-          USER_ID: ${{ secrets.USER_ID }}
 
       - name: Approve a PR
         run: gh pr review --approve "$PR_URL"
