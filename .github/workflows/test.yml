@@ -23,6 +23,12 @@ jobs:
       - name: Build
         run: mvn --batch-mode -DskipTests -e -B package
 
+      - name: Test
+        run: mvn --batch-mode -Dmaven.test.failure.ignore=true -e -B test
+        env:
+          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+          USER_ID: ${{ secrets.USER_ID }}
+
       - name: Report
         uses: dorny/test-reporter@v1
         if: always()
