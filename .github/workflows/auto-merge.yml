@@ -16,7 +16,10 @@ jobs:
         id: dependabot-metadata
         uses: dependabot/fetch-metadata@v1.6.0
         with:
-          github-token: "${{ secrets.GITHUB_TOKEN }}"
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Checkout
+        uses: actions/checkout@v4
 
       - name: Approve a PR
         run: gh pr review --approve "$PR_URL"
