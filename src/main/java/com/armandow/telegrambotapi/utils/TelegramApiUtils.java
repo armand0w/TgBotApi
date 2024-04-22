@@ -4,6 +4,7 @@ import com.armandow.telegrambotapi.model.Command;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Calendar;
 import java.util.Map;
 
 public class TelegramApiUtils {
@@ -52,5 +53,22 @@ public class TelegramApiUtils {
 
     public static synchronized void setLastUpdateId(Long lastUpdateId) {
         TelegramApiUtils.lastUpdateId = lastUpdateId;
+    }
+
+    public static int getInitialStart(int refresh) {
+        var cs = Calendar.getInstance().get(Calendar.SECOND);
+
+        if ( refresh < 60 ) {
+            return ( 60 - cs );
+        }
+
+        refresh = ( refresh / 60 );
+
+        if ( refresh < 60 ) {
+            var cm = Calendar.getInstance().get(Calendar.MINUTE);
+            return ((( (((cm / refresh) + 1 )) * refresh ) - cm) * 60) - cs;
+        }
+
+        return 0;
     }
 }
