@@ -66,7 +66,7 @@ public class TelegramApiUtils {
 
         if ( refresh < 60 ) {
             var cm = Calendar.getInstance().get(Calendar.MINUTE);
-            return ((( (((cm / refresh) + 1 )) * refresh ) - cm) * 60) - cs;
+            return ((( ((cm / refresh) + 1 ) * refresh ) - cm) * 60) - cs;
         }
 
         return 0;
