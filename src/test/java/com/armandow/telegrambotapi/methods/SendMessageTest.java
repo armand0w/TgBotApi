@@ -29,9 +29,9 @@ class SendMessageTest {
             assertNotNull(k);
 
             assertNotNull(c);
-            assertNotNull(c.name());
-            assertNotNull(c.description());
-            assertNotNull(c.botCommandInstance());
+            assertNotNull(c.getName());
+            assertNotNull(c.getDescription());
+            assertNotNull(c.getBotCommandInstance());
             assertNotNull(c.toString());
         });
 
@@ -55,7 +55,7 @@ class SendMessageTest {
                 == MARKDOWN ==
                 *bold text*
                 _italic text_
-                [inline URL](https://github.com/armand0w/tgBotApi)
+                [inline URL](https://github.com/armand0w/TgBotApi)
                 [inline mention of a user](tg://user?id=5462882796)
                 `inline fixed-width code`
                 ```
@@ -109,7 +109,7 @@ class SendMessageTest {
         msg.setText(" "
                 + "*Titulo Negritas* " + Emoji.NO_MOBILE_PHONES + " " + Emoji.GREEN_COLOR + " " + Emoji.RED_COLOR + " \n\n"
                 + "Texto de la nota bla bla bla bla\n\n"
-                + "[Leer mas](" +TelegramApiUtils.scapeUrl("https://github.com/armand0w/tgBotApi")+ ")");
+                + "[Leer mas](" +TelegramApiUtils.scapeUrl("https://github.com/armand0w/TgBotApi")+ ")");
         resp = msg.send();
         assertNotNull(resp);
         assertTrue(resp.getBoolean("ok"));
@@ -133,7 +133,7 @@ class SendMessageTest {
                 <s>strikethrough</s>, <strike>strikethrough</strike>, <del>strikethrough</del>
                 <span class="tg-spoiler">spoiler</span>, <tg-spoiler>spoiler</tg-spoiler>
                 <b>bold <i>italic bold <s>italic bold strikethrough <span class="tg-spoiler">italic bold strikethrough spoiler</span></s> <u>underline italic bold</u></i> bold</b>
-                <a href="https://github.com/armand0w/tgBotApi">inline URL</a>
+                <a href="https://github.com/armand0w/TgBotApi">inline URL</a>
                 <a href="tg://user?id=5462882796">inline mention of a user</a>
                 <tg-emoji emoji-id="5368324170671202286">👍</tg-emoji>
                 <code>inline fixed-width code</code>
