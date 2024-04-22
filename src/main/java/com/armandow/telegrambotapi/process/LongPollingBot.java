@@ -117,7 +117,7 @@ public class LongPollingBot extends Thread {
         if ( command[0].equals("/help") && !TelegramApiUtils.getBotCommandMap().containsKey("/help") ) {
             sendHelp(update);
         } else if ( TelegramApiUtils.getBotCommandMap().containsKey(command[0]) ) {
-            TelegramApiUtils.getBotCommandMap().get(command[0]).getBotCommandInstance().execute(
+            TelegramApiUtils.getBotCommandMap().get(command[0]).botCommandInstance().execute(
                     new JSONObject(update.optQuery("/message/from").toString()),
                     new JSONObject(update.optQuery("/message/chat").toString()),
                     command.length > 1 ? Arrays.copyOfRange(command, 1, command.length) : null);
@@ -143,7 +143,7 @@ public class LongPollingBot extends Thread {
             TelegramApiUtils.getBotCommandMap()
                     .forEach((k, c) -> strBuilder.append(k)
                             .append("\t\t")
-                            .append(c.getDescription())
+                            .append(c.description())
                             .append("\n"));
 
             var msg = new SendMessage();

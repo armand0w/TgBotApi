@@ -24,7 +24,7 @@ public class TelegramBot {
 
             for ( Annotation annotation: annotations ) {
                 if ( annotation instanceof BotCommand bc) {
-                    TelegramApiUtils.getBotCommandMap().put(bc.value(), new Command(commandClass, bc.value(), bc.description()));
+                    TelegramApiUtils.getBotCommandMap().put(bc.value(), new Command(bc.value(), bc.description(), commandClass));
                 }
             }
         } catch (Exception e) {
