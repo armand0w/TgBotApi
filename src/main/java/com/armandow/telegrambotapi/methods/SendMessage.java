@@ -17,6 +17,7 @@ import org.json.JSONObject;
 @Slf4j
 public class SendMessage {
     private Long chatId;
+    private Long threadId;
     private String text;
     private ParseMode parseMode;
     private Integer replyToMessageId;
@@ -41,6 +42,10 @@ public class SendMessage {
 
             if ( parseMode != null ) {
                 payload.put("parse_mode", this.parseMode.toString());
+            }
+
+            if ( threadId != null ) {
+                payload.put("message_thread_id", this.threadId);
             }
 
             if ( replyToMessageId != null ) {

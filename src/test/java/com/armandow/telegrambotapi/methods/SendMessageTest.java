@@ -29,9 +29,9 @@ class SendMessageTest {
             assertNotNull(k);
 
             assertNotNull(c);
-            assertNotNull(c.name());
-            assertNotNull(c.description());
-            assertNotNull(c.botCommandInstance());
+            assertNotNull(c.getName());
+            assertNotNull(c.getDescription());
+            assertNotNull(c.getBotCommandInstance());
             assertNotNull(c.toString());
         });
 
