@@ -44,7 +44,7 @@ public class LongPollingBot extends Thread {
                         offset.put("offset", TelegramApiUtils.getLastUpdateId());
                     }
 
-                    log.debug("/getUpdates: {}", TelegramApiUtils.getLastUpdateId());
+                    log.trace("/getUpdates: {}", TelegramApiUtils.getLastUpdateId());
                     var response = new RestClient(TelegramApiUtils.getUrlBase() + "/getUpdates").postJson(offset).getBody();
                     var updates = response.optJSONArray("result");
 
@@ -52,7 +52,7 @@ public class LongPollingBot extends Thread {
                         TelegramApiUtils.setLastUpdateId(null);
                         lock.wait(2499);
                     } else {
-                        log.trace(updates.toString(4));
+                        log.debug(updates.toString(4));
                         iterateResults(updates);
                     }
                 } catch (InterruptedException ie) {
