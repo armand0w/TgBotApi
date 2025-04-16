@@ -21,6 +21,17 @@ class SendMessageTest {
     @BeforeAll
     static void beforeAll() {
         var bot = new TelegramBot(System.getenv("BOT_TOKEN"));
+
+        try {
+            var me = new GetMe().getMe();
+            assertNotNull(me);
+            log.info("Me: {}", me.toString(4));
+            assertTrue(me.getBoolean("ok"));
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+        }
+
+
         bot.registerCommand(new StartCommand());
         bot.registerCommand(new HelpCommand());
         bot.run();

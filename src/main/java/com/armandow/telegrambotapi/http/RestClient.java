@@ -29,6 +29,8 @@ public class RestClient {
 
     public RestClient postJson(JSONObject data) throws Exception {
         log.trace("URL: {}", this.url);
+        log.trace("==> {}", data.toString(2));
+
         var request = HttpRequest.newBuilder()
                 .timeout(Duration.ofSeconds(25))
                 .POST(HttpRequest.BodyPublishers.ofString(data.toString()))
@@ -43,12 +45,39 @@ public class RestClient {
         this.body = new JSONObject(response.body());
 
         if ( this.statusCode != 200 ) {
-            log.warn(this.body.toString(2));
+            log.warn("<== {}", this.body.toString(2));
         }
 
         var headers = response.headers();
-        headers.map().forEach((k, v) -> log.trace(k + ":" + v));
+        headers.map().forEach((k, v) -> log.trace("{}:{}", k, v));
         log.trace("--------------------------------------------------------------------------------------------------");
+
+        if ( this.statusCode == 429 ) {
+            throw new TooManyRequestExceptions("Too Many Requests", this.body);
+        }
+
+        return this;
+    }
+
+    public RestClient getJson() throws Exception {
+        log.trace("URL: {}", this.url);
+
+        var request = HttpRequest.newBuilder()
+                .timeout(Duration.ofSeconds(25))
+                .GET()
+                .uri(URI.create(url))
+                .setHeader("User-Agent", "TgBotApi v0.0.5")
+                .header("Content-Type", "application/json")
+                .build();
+
+        var response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
+        this.statusCode = response.statusCode();
+        this.body = new JSONObject(response.body());
+
+        if ( this.statusCode != 200 ) {
+            log.warn("<== {}", this.body.toString(2));
+        }
 
         if ( this.statusCode == 429 ) {
             throw new TooManyRequestExceptions("Too Many Requests", this.body);

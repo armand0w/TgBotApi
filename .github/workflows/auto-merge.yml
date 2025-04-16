@@ -3,6 +3,7 @@ name: CI Auto merge
 on:
   pull_request:
     branches: [ dependencies ]
+  workflow_dispatch:
 
 permissions:
   pull-requests: write
@@ -15,9 +16,9 @@ jobs:
     steps:
       - name: Dependabot metadata
         id: dependabot-metadata
-        uses: dependabot/fetch-metadata@v2.3.0
+        uses: dependabot/fetch-metadata@v2.4.0
         with:
-          github-token: "${{ secrets.GITHUB_TOKEN }}"
+          github-token: ${{ secrets.GH_PAT }}
 
       - uses: actions/checkout@v4
       - name: Set up JDK 17
@@ -26,14 +27,6 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
           cache: maven
-
-      - name: Cache Maven packages
-        uses: actions/cache@v4
-        with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-maven-
 
       - name: Build with Maven
         run: mvn clean verify -DskipTests -e -B --file pom.xml
@@ -57,10 +50,39 @@ jobs:
         run: gh pr review --approve "$PR_URL"
         env:
           PR_URL: ${{ github.event.pull_request.html_url }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
 
       - name: Enable auto-merge for Dependabot PRs
         run: gh pr merge --auto --squash "$PR_URL"
         env:
           PR_URL: ${{ github.event.pull_request.html_url }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+
+      - name: Merge to develop branch
+        if: success()
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          
+          # Asegurar que tenemos las últimas actualizaciones
+          git fetch origin develop dependencies
+          
+          # Merge PR en dependencies
+          gh pr merge --auto --squash "$PR_URL"
+          
+          # Cambiar a develop y hacer merge desde origin/dependencies
+          git checkout develop
+          git pull origin develop
+          git merge origin/dependencies
+          
+          # Si el merge fue exitoso, hacer push
+          if [ $? -eq 0 ]; then
+            git push origin develop
+          else
+            echo "❌ Error durante el merge"
+            git merge --abort
+            exit 1
+          fi
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
