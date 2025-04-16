@@ -36,6 +36,9 @@ jobs:
 
       - name: Test
         run: mvn test -Dmaven.test.failure.ignore=true -e -B
+        env:
+          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+          USER_ID: ${{ secrets.USER_ID }}
 
       - name: Test Report
         uses: dorny/test-reporter@v2

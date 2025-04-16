@@ -40,6 +40,9 @@ jobs:
 
       - name: Run Tests with Coverage
         run: mvn test jacoco:report -Pcoverage -e -B -Dmaven.test.failure.ignore=true --file pom.xml
+        env:
+          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+          USER_ID: ${{ secrets.USER_ID }}
 
       - name: Test Report
         uses: dorny/test-reporter@v2
