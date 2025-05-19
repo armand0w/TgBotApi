@@ -29,6 +29,8 @@ public class RestClient {
 
     public RestClient postJson(JSONObject data) throws Exception {
         log.trace("URL: {}", this.url);
+        log.trace("==> {}", data.toString(2));
+
         var request = HttpRequest.newBuilder()
                 .timeout(Duration.ofSeconds(25))
                 .POST(HttpRequest.BodyPublishers.ofString(data.toString()))
@@ -43,7 +45,6 @@ public class RestClient {
         this.body = new JSONObject(response.body());
 
         if ( this.statusCode != 200 ) {
-            log.warn("==> {}", data.toString(2));
             log.warn("<== {}", this.body.toString(2));
         }
 
