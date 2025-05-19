@@ -59,6 +59,33 @@ public class RestClient {
         return this;
     }
 
+    public RestClient getJson() throws Exception {
+        log.trace("URL: {}", this.url);
+
+        var request = HttpRequest.newBuilder()
+                .timeout(Duration.ofSeconds(25))
+                .GET()
+                .uri(URI.create(url))
+                .setHeader("User-Agent", "TgBotApi v0.0.5")
+                .header("Content-Type", "application/json")
+                .build();
+
+        var response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
+        this.statusCode = response.statusCode();
+        this.body = new JSONObject(response.body());
+
+        if ( this.statusCode != 200 ) {
+            log.warn("<== {}", this.body.toString(2));
+        }
+
+        if ( this.statusCode == 429 ) {
+            throw new TooManyRequestExceptions("Too Many Requests", this.body);
+        }
+
+        return this;
+    }
+
     private HttpClient createHttpClient() {
         HttpClient client;
 
