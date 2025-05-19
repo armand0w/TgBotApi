@@ -15,7 +15,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-    <json.version>20250107</json.version>
+    <json.version>20250517</json.version>
     <slf4j.version>2.0.17</slf4j.version>
     <jacoco.version>0.8.13</jacoco.version>
     <junit.version>5.12.2</junit.version>
