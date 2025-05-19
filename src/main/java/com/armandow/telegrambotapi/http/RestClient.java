@@ -43,11 +43,12 @@ public class RestClient {
         this.body = new JSONObject(response.body());
 
         if ( this.statusCode != 200 ) {
-            log.warn(this.body.toString(2));
+            log.warn("==> {}", data.toString(2));
+            log.warn("<== {}", this.body.toString(2));
         }
 
         var headers = response.headers();
-        headers.map().forEach((k, v) -> log.trace(k + ":" + v));
+        headers.map().forEach((k, v) -> log.trace("{}:{}", k, v));
         log.trace("--------------------------------------------------------------------------------------------------");
 
         if ( this.statusCode == 429 ) {

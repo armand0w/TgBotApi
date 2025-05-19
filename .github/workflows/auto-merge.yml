@@ -3,6 +3,7 @@ name: CI Auto merge
 on:
   pull_request:
     branches: [ dependencies ]
+  workflow_dispatch:
 
 permissions:
   pull-requests: write
