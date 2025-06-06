@@ -18,6 +18,12 @@ public class TelegramBot {
         TelegramApiUtils.setBotCommandMap(new HashMap<>());
     }
 
+    public TelegramBot(String token, Long apiUpdate) {
+        TelegramApiUtils.setUrlBase("https://api.telegram.org/bot" + token);
+        TelegramApiUtils.setBotCommandMap(new HashMap<>());
+        TelegramApiUtils.setApiUpdate(apiUpdate);
+    }
+
     public void registerCommand(IBotCommand commandClass) {
         try {
             var annotations = Class.forName(commandClass.getClass().getName()).getAnnotations();

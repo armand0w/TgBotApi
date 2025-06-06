@@ -18,7 +18,7 @@
     <json.version>20250517</json.version>
     <slf4j.version>2.0.17</slf4j.version>
     <jacoco.version>0.8.13</jacoco.version>
-    <junit.version>5.12.2</junit.version>
+    <junit.version>5.13.0</junit.version>
     <lombok.version>1.18.38</lombok.version>
 
     <maven-compile-plugin.version>3.14.0</maven-compile-plugin.version>
