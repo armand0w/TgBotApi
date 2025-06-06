@@ -50,7 +50,7 @@ public class LongPollingBot extends Thread {
 
                     if ( updates == null || updates.isEmpty() ) {
                         TelegramApiUtils.setLastUpdateId(null);
-                        lock.wait(2499);
+                        lock.wait(TelegramApiUtils.getApiUpdate());
                     } else {
                         log.debug(updates.toString(4));
                         iterateResults(updates);

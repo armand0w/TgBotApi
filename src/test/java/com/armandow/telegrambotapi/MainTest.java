@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class MainTest {
     public static void main(String[] args) {
-        var bot = new TelegramBot(System.getenv("BOT_TOKEN"));
+        var bot = new TelegramBot(System.getenv("BOT_TOKEN"), 60000L);
         bot.registerCommand(new StartCommand());
         bot.registerCommand(new HelpCommand());
         bot.run();

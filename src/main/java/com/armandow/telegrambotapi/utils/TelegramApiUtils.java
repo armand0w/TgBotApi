@@ -16,6 +16,7 @@ public class TelegramApiUtils {
     private static Long lastUpdateId = null;
     @Getter @Setter private static String urlBase;
     @Getter @Setter private static Map<String, Command> botCommandMap;
+    @Getter @Setter private static Long apiUpdate = 2499L;
 
     public static String scapeTelegramString(String text) {
         return text
