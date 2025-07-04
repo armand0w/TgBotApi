@@ -28,16 +28,6 @@ public class MainTest {
         assertNotNull(bot);
     }
 
-    @BeforeAll
-    static void beforeAll() {
-        var bot = new TelegramBot(System.getenv("BOT_TOKEN"));
-        bot.registerCommand(new StartCommand());
-        bot.registerCommand(new HelpCommand());
-        bot.run();
-
-        assertNotNull(bot);
-    }
-
     @Test
     void name() {
         assertNotNull(TelegramApiUtils.getUrlBase());
