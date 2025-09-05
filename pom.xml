@@ -19,7 +19,7 @@
     <slf4j.version>2.0.17</slf4j.version>
     <jacoco.version>0.8.13</jacoco.version>
     <junit.version>5.13.4</junit.version>
-    <lombok.version>1.18.38</lombok.version>
+    <lombok.version>1.18.40</lombok.version>
 
     <maven-compile-plugin.version>3.14.0</maven-compile-plugin.version>
     <surefire-plugin.version>3.5.3</surefire-plugin.version>
