@@ -18,7 +18,7 @@ jobs:
         id: dependabot-metadata
         uses: dependabot/fetch-metadata@v2.4.0
         with:
-          github-token: ${{ secrets.OTHER_GH_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: actions/checkout@v4
       - name: Set up JDK 17
@@ -50,13 +50,13 @@ jobs:
         run: gh pr review --approve "$PR_URL"
         env:
           PR_URL: ${{ github.event.pull_request.html_url }}
-          GITHUB_TOKEN: ${{ secrets.OTHER_GH_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
 
       - name: Enable auto-merge for Dependabot PRs
         run: gh pr merge --auto --squash "$PR_URL"
         env:
           PR_URL: ${{ github.event.pull_request.html_url }}
-          GITHUB_TOKEN: ${{ secrets.OTHER_GH_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
 
       - name: Merge to develop branch
         if: success()
@@ -85,4 +85,4 @@ jobs:
           fi
         env:
           PR_URL: ${{ github.event.pull_request.html_url }}
-          GITHUB_TOKEN: ${{ secrets.OTHER_GH_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
